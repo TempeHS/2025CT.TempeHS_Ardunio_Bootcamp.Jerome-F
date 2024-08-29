@@ -21,12 +21,20 @@
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/07.pulseWidthModulation/Bootcamp-PWMOutput.png
 */
 
+static unsigned int ledPin = 3;
+static unsigned int rotPin = A3;
 
 
-void setup() {
-  
+void setup() 
+{
+  Serial.begin(9600);
+  Serial.println("debug");
+  pinMode(ledPin, OUTPUT);
 }
 
-void loop() {
-  
+void loop() 
+{
+  int val = analogRead(A3);
+  val = val / 4;
+  analogWrite (ledPin, val); 
 }
