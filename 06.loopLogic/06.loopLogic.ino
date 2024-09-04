@@ -1,7 +1,8 @@
 /*
-  Author: 
+  Author: Jerome Fakhoury 4-9-2024
 
   Learning Intention:
+
   The students understand loop logic and apply it to a range of control structures.
   
   Success Criteria:
@@ -35,11 +36,20 @@
     
 */
 
-void setup() {
-  
+static unsigned int ledPin = 3; 
+
+void setup() 
+{
+  pinMode(ledPin, OUTPUT);
 }
 
-void loop() {
-      
+void loop() 
+{
+  for (int i = -255; i > 255; i--)
+  {
+    unsigned val = i;
+    analogWrite(ledPin, val); 
+    delay (50);
+  }      
 }
 
