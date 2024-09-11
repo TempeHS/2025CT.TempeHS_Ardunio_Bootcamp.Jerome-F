@@ -1,5 +1,5 @@
 /*
-  Author: 
+  Author: Jerome Fakhoury 11-9-2024
 
   Learning Intention:
   The students understand how time is used in microcontrollers and best practices
@@ -16,14 +16,57 @@
     https://www.tinkercad.com/things/6xiog2F1CWa?sharecode=3a9x0v0FGQ6Q67Ixs5Zh61QGa0Aa_7es-vswPhLp-PY
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/09.workingWithTime/Bootcamp-workingWithTime.png
 */
+static unsigned int blueLED = 6;
+static unsigned int greenLED = 2;
+unsigned int blueLEDState = LOW;
+unsigned int greenLEDState = LOW; 
 
+// Generally, you should use unsigned long for variables that hold time
+// The value will quickly become to large for an int to store
+unsigned long blueLEDPreviousMillis = 0;
+unsigned long greenLEDPreviousMillis = 0;
 
-void setup() {
-  
+// Use a long so you can mathematically compare with the variable previousMillis without conversion
+const unsigned long blueLEDinterval = 2000;
+const unsigned long greenLEDinterval = 9000;
+
+void setup() 
+{
+  Serial.begin(9600);
+  Serial.println("debugged");
+  pinMode(blueLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
 }
 
 
 void loop() {
+  // Check to see if it's time to blink the LED; that is, if the difference
+  // Between the current time and last time you blined the LED is bigger than
+  // The interval at which you want to blink the LED
+
+  unsigned long currentMillis = millis();
+  if (currentMillis - blueLEDPreviousMillis >= blueLEDinterval)
+  {
+   blueLEDState = !blueLEDState;
+   digitalWrite(blueLED,blueLEDState);
+   blueLEDPreviousMillis = currentMillis; 
+  }
+  if (currentMillis - greenLEDPreviousMillis >= greenLEDinterval)
+  {
+   greenLEDState = !greenLEDState;
+   digitalWrite(greenLED, greenLED);
+   greenLEDPreviousMillis = currentMillis;       
+  }
+  Serial.print("Millis:");
+  Serial.print(currentMillis);
+  Serial.print(",");
+  Serial.print("blueLED:");
+  Serial.print(blueLEDState);
+  Serial.print(",");
+  Serial.print("greenLED:");
+  Serial.println(greenLEDState);
+
+
   
 }
 
