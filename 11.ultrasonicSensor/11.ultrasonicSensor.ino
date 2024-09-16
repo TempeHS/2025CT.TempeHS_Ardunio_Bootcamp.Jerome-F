@@ -25,11 +25,25 @@
 
 #include "Ultrasonic.h"
 
-void setup()
+#include <Servo.h>
+
+Servo myservo;
+Ultrasonic zaif_is_touching_me(5)
+
+unsigned static int servoPin = 7;
+unsigned static int potPin = A2;
+
+void setup() 
 {
-  
+  myservo.attach(servoPin); 
+  Serial.begin(9600);
 }
-void loop()
-{
-  
+
+void loop() {
+  Serial.println(zaif_is_touching_me.distanceRead());
+  int val = analogRead(potPin);
+  val = map(val, 1023, 0, 180, 0);
+  myservo.write(val);
 }
+
+  
