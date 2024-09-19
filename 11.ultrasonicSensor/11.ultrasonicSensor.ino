@@ -28,22 +28,32 @@
 #include <Servo.h>
 
 Servo myservo;
-Ultrasonic zaif_is_touching_me(5)
+Ultrasonic mysensor(5);
 
 unsigned static int servoPin = 7;
-unsigned static int potPin = A2;
+unsigned static int potpin = A2;
+
+unsigned long currentMillis = millis();
+
+
 
 void setup() 
 {
-  myservo.attach(servoPin); 
+  myservo.attach(servoPin);
   Serial.begin(9600);
 }
 
-void loop() {
-  Serial.println(zaif_is_touching_me.distanceRead());
-  int val = analogRead(potPin);
-  val = map(val, 1023, 0, 180, 0);
-  myservo.write(val);
-}
+void loop() 
+{
+      if (mysensor.distanceRead() >= 10)
+  {
+    myservo.write(90);
+    Serial.println("close gate");
+  }
 
-  
+      if (mysensor.distanceRead() <= 10)
+  { 
+    myservo.write(0);
+    Serial.println("open gate");
+  }
+}
